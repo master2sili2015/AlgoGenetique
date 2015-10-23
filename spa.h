@@ -49,7 +49,14 @@
 
 #ifndef __solar_position_algorithm_header
 #define __solar_position_algorithm_header
+#include <stdio.h>
+#include <stdlib.h>
+#include <string>
+#include <iostream>
+#include <fstream>
+#include "date.h"
 
+using namespace std;
 
 //enumeration for function codes to select desired final outputs from SPA
 enum {
@@ -200,5 +207,17 @@ double topocentric_azimuth_angle(double azimuth_astro);
 
 //Calculate SPA output values (in structure) based on input values passed in structure
 int spa_calculate(spa_data *spa);
+
+//Calculat SPA all time
+//return -1 is correctly
+//return 1 date begin is bad
+//return 2 date end is bad
+//return 3 step is not correct
+//return 4 timezone is not correct
+//return 5 longitude is not correct
+//return 6 latitude is not correct
+//return 7 missing arguments
+//return 8 the start date is superior to the end dates
+int calculate_all_position(std::string param);
 
 #endif
