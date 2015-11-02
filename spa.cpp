@@ -1189,10 +1189,11 @@ int calculate_all_position(string str)
     spa.delta_ut1     = 0;
     spa.delta_t       = 67;
     spa.elevation     = 30;
-    spa.pressure      = 820;
-    spa.temperature   = 11;
-    spa.slope         = 30;
-    spa.azm_rotation  = -10;
+    spa.pressure      = 1013.25;
+    spa.temperature   = 18;
+    // Optional value
+    spa.slope         = 0;
+    spa.azm_rotation  = 180;
     spa.atmos_refract = 0.5667;
     spa.function      = SPA_ALL;
     ////////////////////////////////////////
