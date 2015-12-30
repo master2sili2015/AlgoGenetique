@@ -45,7 +45,8 @@ public:
   static bool check_day(const int y, const int m, const int d);
   static string trim_left(const string str);
   
-  void print();
+  string toString();
+  string date();
 };
 
 #endif // DATE_H

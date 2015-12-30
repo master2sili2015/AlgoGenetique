@@ -1174,14 +1174,14 @@ int spa_calculate(spa_data *spa)
 
 bool verifyNumber(string str)
 {
-    for (int i = 0; i < str.size(); ++i)
+    for (unsigned int i = 0; i < str.size(); ++i)
     {
         if ((str[i] != '-' && str[i] != '.') && !isdigit(str[i]))  return false;
     }
     return true;
 }
 
-int calculate_all_position(string str)
+int calculate_all_position(string str, std::string file, bool nigth)
 {
     spa_data spa;
     ////////////////////////////////////////
@@ -1199,8 +1199,8 @@ int calculate_all_position(string str)
     ////////////////////////////////////////
 
     Date date_begin, date_end;
-    int arg = 1, step;
-    double timezone, longitude, latitude;
+    int arg = 1, step = 0;
+    double timezone = 0.0, longitude = 0.0, latitude = 0.0;
 
     str = Date::trim_left(str);
     str += " ";
@@ -1233,7 +1233,7 @@ int calculate_all_position(string str)
 
             case 3:
                 step = std::stoi(str.substr(0, stTemp));
-                if (!step)
+                if (!step || step == 0)
                 {
                     cerr << "step is not correct" << endl;
                     return 3;
@@ -1284,11 +1284,20 @@ int calculate_all_position(string str)
         return 8;
     }
     ofstream outfile;
-    outfile.open("za_result.dat");
+    outfile.open(file);//"za_result.dat");
     spa.timezone      = timezone;    
     spa.longitude     = longitude;
     spa.latitude      = latitude;
     int result;
+    int y(date_begin.getYear()), m(date_begin.getMonth());
+    string d = "";
+    if (y != date_end.getYear()) outfile << "y " << y << endl;
+    if (m != date_end.getMonth() || y != date_end.getYear()) outfile << "m " << m << endl;
+    if (y == date_end.getYear() && m == date_end.getMonth()) 
+    {
+        d = date_begin.date();
+        outfile << "d " << d << endl;
+    }
     while(date_begin <= date_end)
     {
         spa.year          = date_begin.getYear();
@@ -1298,10 +1307,28 @@ int calculate_all_position(string str)
         spa.minute        = date_begin.getMinute();
         spa.second        = date_begin.getSecond();
 
-        result = spa_calculate(&spa);
-        if (result == 0 && spa.zenith <= 90.0)
+        if (y != date_begin.getYear())
         {
-            outfile << spa.zenith << " " << spa.azimuth << endl;
+            y = date_begin.getYear();
+            outfile << "y " << y << endl;            
+        }
+
+        if (m != date_begin.getMonth())
+        {
+
+            m = date_begin.getMonth();
+            outfile << "m " << m << endl;
+        }
+
+        if (d != "" && d != date_begin.date())
+        {
+            d = date_begin.date();
+            outfile << "d " << d << endl;
+        }
+        result = spa_calculate(&spa);
+        if (result == 0 && (spa.zenith <= 90.0 || nigth))
+        {
+            outfile << "p " << spa.zenith << " " << spa.azimuth << " " << date_begin.toString() << endl;
         }
         date_begin = date_begin.add_minute(step);
     }

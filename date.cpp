@@ -309,7 +309,18 @@ Date Date::add_minute(unsigned int m)
   return d;
 }
 
-void Date::print()
+string Date::toString()
 {
-  cout << year << ":" << month << ":" << day << " " << hours << ":" << minute << ":" << second << endl;
+  string str;
+  str = date();
+  if (hours != 0 || minute != 0 || second != 0)
+    str += ":" + std::to_string(hours) + ":" + std::to_string(minute) + ":" + std::to_string(second);
+  return str;
+}
+
+string Date::date()
+{
+  string str;
+  str = std::to_string(year) + ":" + std::to_string(month) + ":" + std::to_string(day);
+  return str;
 }

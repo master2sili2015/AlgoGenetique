@@ -218,6 +218,6 @@ int spa_calculate(spa_data *spa);
 //return 6 latitude is not correct
 //return 7 missing arguments
 //return 8 the start date is superior to the end dates
-int calculate_all_position(std::string param);
+int calculate_all_position(std::string param, std::string file, bool nigth);
 
 #endif

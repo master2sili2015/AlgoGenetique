@@ -18,11 +18,24 @@
 /////////////////////////////////////////////
 
 #include <stdio.h>
-#include "spa.h"  //include the SPA header file
+
+#include "interface.h"
+#include <QApplication>
 
 int main (int argc, char *argv[])
 {
-    string str = "2015:07:6:6:49:24 2015:07:7   15   2   -0.5549501000000419   47.4569901";
-    calculate_all_position(str);
-    return 0;
+    QApplication app( argc, argv );
+
+    if (!QGLFormat::hasOpenGL())
+    {
+    	cerr << "No OpenGL support" << endl;
+    	return 1;
+    }
+
+    Interface interface;
+    interface.setWindowTitle(QObject::tr("Voile d'ombrage"));
+    interface.resize(900, 950);
+    interface.show();
+
+    return app.exec();
 }
