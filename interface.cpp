@@ -7,12 +7,10 @@ Interface::Interface(QWidget * parent) : QMainWindow(parent)
     ombrage = new Ombrage();
 	posSun = new PosSun();
 	Concat = new ConcatString;
-	//Concat->setMinimumHeight(this->width()/3);
-	//Concat->setMaximumWidth(230);
 	Concat->setMaximumHeight(300);
 	sol = new CoordSol;
 
-	listView = new MyListView("Min", "Max", OTHER);
+	listView = new MyListView("Min", "Max", "Min", "Max", OTHER);
 	listView->setMaximumWidth(230);
 	listView->setMaximumHeight(300);
 
@@ -45,9 +43,13 @@ Interface::Interface(QWidget * parent) : QMainWindow(parent)
 
 	connect(sol, SIGNAL(drawSurface(QStringList, string)), 
 		ombrage, SLOT(surfaceDrow(QStringList, string)));
+	connect(optionOmbrageGenerate, SIGNAL(optionChoose(GAOptions *)),
+		ombrage, SLOT(startAlgoGen(GAOptions *)));
 	connect(listView, SIGNAL(updateFile(string)), ombrage, SLOT(setModeleFile(string)));
 	connect(Concat, SIGNAL(zaFile(string)), posSun, SLOT(setTree(string)));
 	connect(posSun, SIGNAL(zaFile(string)), ombrage, SLOT(setZeniteAzimithFile(string)));
+	connect(colorOmbrage, SIGNAL(color(QColor, int)), ombrage, SLOT(updateColor(QColor, int)));
+	connect(colorOmbrage, SIGNAL(startAlgo()), optionOmbrageGenerate, SLOT(startAlgoGen()));
 }
 
 Interface::~Interface()

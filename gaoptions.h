@@ -102,7 +102,7 @@ private:
 	// merge
 
 public:
-	GAOptions();
+	GAOptions() {};
 	GAOptions(float pm, float scl, int ps, SEH fh, SH sh, int ss, int cpc, CH ch, MH mh, ICH ich);
 
 	// setters & getters	

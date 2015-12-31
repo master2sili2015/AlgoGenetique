@@ -2,6 +2,8 @@
 
 OptionGenerate::OptionGenerate(QWidget * parent) : QWidget(parent)
 {
+	options = new GAOptions();
+
 	///////// General information ///////////////////
 	general = new QGroupBox(tr("General information"));
 	QHBoxLayout * mutationProbabilityLayout = new QHBoxLayout;
@@ -193,6 +195,13 @@ void OptionGenerate::childrenPerCoupleValid(QString text)
 
 GAOptions * OptionGenerate::getOptionChoose()
 {
+	if (mutationProbability->text().isEmpty() 
+		|| childrenPerCouple->text().isEmpty()
+		|| popSize->text().isEmpty())
+	{
+		QMessageBox::information(this, "INCORRECTE OPTIONS CHOOSE", "The options chosen are not correct.");
+    	return NULL;
+	}
 	////////////General Information value ///////////////
 	bool ok;
 	if (!mutationProbability->text().isEmpty()) 
@@ -334,5 +343,14 @@ GAOptions * OptionGenerate::getOptionChoose()
 			break;
 		}
 	}
+
+	//options->set_age(check->isChecked());
 	return options;
+}
+
+void OptionGenerate::startAlgoGen()
+{
+	GAOptions * gaOp = getOptionChoose();
+	if (gaOp == NULL) return;
+	emit optionChoose(gaOp);
 }

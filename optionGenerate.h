@@ -21,6 +21,9 @@ public:
 
 	GAOptions * getOptionChoose();
 
+signals:
+	void optionChoose(GAOptions *);
+
 private slots:
 	void fitnessHeuristicSlot(int index);
 	void selectionHeuristicSlot(int index);
@@ -29,6 +32,8 @@ private slots:
 	void fitnessTresholdValid(QString text);
 	void selectionSizeValid(QString text);
 	void childrenPerCoupleValid(QString text);
+
+	void startAlgoGen();
 	
 private:
 	void initComboBoxValue();

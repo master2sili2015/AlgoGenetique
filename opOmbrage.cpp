@@ -6,14 +6,14 @@ OpOmbrage::OpOmbrage(QWidget * parent) : QWidget(parent)
 	QHBoxLayout * layoutOmbre = new QHBoxLayout;
 	QHBoxLayout * layoutSol = new QHBoxLayout;
 
-	buttonAlgoGen = new QPushButton(tr("start genetic algorithm"), NULL);
+	buttonAlgoGen = new QPushButton(tr("Start genetic algorithm"), NULL);
 	QVBoxLayout * layout = new QVBoxLayout;
 	layout->addWidget(buttonAlgoGen);
 	layout->addWidget(new QLabel());
 
-	labelVoile 	= new QLabel;
-	labelOmbre 	= new QLabel;
-	labelSol 	= new QLabel;
+	labelVoile 	= new MyLabel;
+	labelOmbre 	= new MyLabel;
+	labelSol 	= new MyLabel;
 
 	layoutVoile->addWidget(new QLabel(tr("Voile color")));
 	layoutVoile->addWidget(labelVoile);
@@ -56,14 +56,21 @@ OpOmbrage::OpOmbrage(QWidget * parent) : QWidget(parent)
     setLayout(generalLayout);
     setMaximumHeight(200);
 
-	//connect(labelVoile, SIGNAL(clicked()), this, SLOT(couleurVoile()));
-	//connect(labelOmbre, SIGNAL(clicked()), this, SLOT(couleurOmbre()));
-	//connect(labelSol, SIGNAL(clicked()), this, SLOT(couleurSol()));
+	connect(labelVoile, SIGNAL(clicked()), this, SLOT(couleurVoile()));
+	connect(labelOmbre, SIGNAL(clicked()), this, SLOT(couleurOmbre()));
+	connect(labelSol, SIGNAL(clicked()), this, SLOT(couleurSol()));
+
+	connect(buttonAlgoGen, SIGNAL(clicked()), this, SLOT(startAlgoGen()));
 }
 
 OpOmbrage::~OpOmbrage()
 {
 
+}
+
+void OpOmbrage::startAlgoGen()
+{
+	emit startAlgo();
 }
 
 void OpOmbrage::couleurVoile()

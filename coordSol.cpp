@@ -4,7 +4,7 @@ CoordSol::CoordSol(QWidget * parent) : QWidget(parent)
 {
 	ombrage = new Ombrage(SURFACE);	
 
-	listView = new MyListView("Coord X", "Coord Y", SOL, true);
+	listView = new MyListView("Coord X", "Coord Y", "X", "Y", SOL, true);
 	listView->setMaximumWidth(230);
 
 	layoutGeneral = new QHBoxLayout;

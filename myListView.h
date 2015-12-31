@@ -1,6 +1,10 @@
 #ifndef MYLISTVIEW_H
 #define MYLISTVIEW_H
 
+#include <QTableView>
+#include <QStandardItemModel>
+#include <QStandardItem>
+
 #include <QGroupBox>
 #include <QLineEdit>
 #include <QPushButton>
@@ -26,7 +30,8 @@ class MyListView : public QWidget
 {
 	Q_OBJECT
 public:
-	MyListView(QString label1, QString label2, Type t = OTHER, bool surfaceUpdate = false, QWidget * parent = 0);
+	//MyListView(QString label1, QString label2, 
+	MyListView(QString label1, QString label2, QString col1, QString col2, Type t = OTHER, bool surfaceUpdate = false, QWidget * parent = 0);
 	~MyListView();
 
 signals:
@@ -50,8 +55,12 @@ private slots:
 private:
 	void remplirListe(string fic);
 	void upAndDown(bool up);
+	void setHesder();
 
 	QListView * listView;
+
+	QTableView * tabListe;
+	QStandardItemModel * mod;
 
 	QPushButton * saveButton;
 	QPushButton * rafraichButton;
@@ -63,21 +72,18 @@ private:
 	QPushButton * addItem;
 	QPushButton * insertItem;
 	QPushButton * deleteItem;
-	QVBoxLayout * layoutButton;
 
 	QLabel * labelX;
 	QLabel * labelY;
 	QLineEdit * coordX;
 	QLineEdit * coordY;
-	QHBoxLayout * layoutEdit;
 
 	QStringList list;
 	QStringListModel * model;
 
-	QVBoxLayout * layoutComposant;
-	QHBoxLayout * layoutPoint;
-
 	Type type;
 	bool rafraich;
+	QString colonne1;
+	QString colonne2;
 };
 #endif

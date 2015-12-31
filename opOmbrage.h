@@ -12,6 +12,8 @@
 #define COULEUR_OMBRE 2
 #define COULEUR_SOL 3
 
+#include "myLabel.h"
+
 class OpOmbrage : public QWidget
 {
 	Q_OBJECT
@@ -21,18 +23,20 @@ public:
 
 signals:
 	void color(QColor, int);
+	void startAlgo();
 
 private slots:
 	void couleurVoile();
 	void couleurOmbre();
 	void couleurSol();
+	void startAlgoGen();
 
 private:
 	void couleurChange(int col);
 
-	QLabel * labelVoile;
-	QLabel * labelOmbre;
-	QLabel * labelSol;
+	MyLabel * labelVoile;
+	MyLabel * labelOmbre;
+	MyLabel * labelSol;
 
 	QPushButton * buttonAlgoGen;
 };

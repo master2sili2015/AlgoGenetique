@@ -8,7 +8,9 @@
 #include <GL/glut.h>    // Header File For The GLUT Library 
 #include <GL/gl.h>	// Header File For The OpenGL32 Library
 #include <QColorDialog>
+#include <QMessageBox>
 
+#include "gaoptions.h"
 #include "creature.h"
 #include "surface.h"
 #include <iostream>
@@ -28,12 +30,13 @@ public:
 
 	void updateSurface(f2dPolygon * polygon);
 
-private slots:
-	//void surfaceFromFile(string str);
+private slots:	
 	void surfaceDrow(QStringList list, string f);
 	void updateColor(QColor col, int i);
 	void setModeleFile(string file);
 	void setZeniteAzimithFile(string file);
+
+	void startAlgoGen(GAOptions * option);
 
 protected:
 	void initializeGL();

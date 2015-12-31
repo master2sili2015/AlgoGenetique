@@ -6,6 +6,7 @@ Ombrage::Ombrage(Dessin d, QWidget * parent) : QGLWidget(parent)
 	dessin = d;
 	surfaceFile = "";
 	surface = NULL;
+	creature = NULL;
 	update = false;
 
 	translate = -10.0;
@@ -17,7 +18,7 @@ Ombrage::Ombrage(Dessin d, QWidget * parent) : QGLWidget(parent)
 	ombreColor = Qt::darkRed;
 	solColor = Qt::lightGray;
 
-	creature = new Creature(12);
+	/*creature = new Creature(12);
 
 	creature->set(0, 1);
 	creature->set(1, 1);
@@ -30,7 +31,7 @@ Ombrage::Ombrage(Dessin d, QWidget * parent) : QGLWidget(parent)
 	creature->set(8, 0.5);
 	creature->set(9, -1);
 	creature->set(10, 1);
-	creature->set(11, 0.5);
+	creature->set(11, 0.5);*/
 }
 
 Ombrage::~Ombrage()
@@ -79,8 +80,9 @@ void Ombrage::draw()
 
 	if (dessin == CLEAR) return;
 
-	if (dessin == SCENE)
+	if (dessin == SCENE && creature != NULL)
 	{
+		cout << "aaaaa" << endl;
 		//La position du voile
 		vector<f3dPoint> voile = creature->polygon().getPoints();
 
@@ -106,12 +108,12 @@ void Ombrage::draw()
 		glEnd();
 
 		//La direction du soleil
-		glLineWidth(10.0);
+		/*glLineWidth(10.0);
 		glBegin(GL_LINES);	
 		qglColor(Qt::blue);
 		glVertex3f(1, 2, 3);
 		glVertex3f(-1, -2, -3);
-		glEnd();
+		glEnd();*/
 	}
 
 	if (dessin == SURFACE)
@@ -272,4 +274,41 @@ void Ombrage::setModeleFile(string file)
 void Ombrage::setZeniteAzimithFile(string file)
 {
 	ZAFile = file;
+}
+
+void Ombrage::startAlgoGen(GAOptions * option)
+{
+	if (!QFile::exists(QString::fromStdString(ZAFile)))
+	{
+		QMessageBox::information(this, "FILE NOT FOUND", "The file zenit and azimith is not found.");
+		return;
+	}
+	
+	if (!QFile::exists(QString::fromStdString(modeleFile)))
+	{
+		QMessageBox::information(this, "FILE NOT FOUND", "The gene model file is not found.");
+		return;
+	}
+
+	if (!QFile::exists(QString::fromStdString(surfaceFile)))
+	{
+		QMessageBox::information(this, "FILE NOT FOUND", "The file of coordinates of surface points are not found.");
+		return;
+	}
+
+	if (option == NULL)
+	{
+		QMessageBox::information(this, "INCORRECTE OPTIONS CHOOSE", "The options chosen are not correct.");
+		return;
+	}
+
+	//creature = le retour du resultat de l'algorithme genetique
+			// Les parametre 
+				//	ZAFile 			/Le fichier de zenith et azimuth
+				//	modeleFile		/Le fichier de model de gene
+				//	surfaceFile 	/*Le fichier du surface*/
+				//	option 			/*pointeur de Goption*/
+
+
+	updateGL();
 }
